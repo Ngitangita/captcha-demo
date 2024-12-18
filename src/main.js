@@ -1,5 +1,4 @@
 import "./style.css";
 
-document.getElementById("showCaptchaBtn").addEventListener("click", function () {
-    console.log("SHOW CAPTCHA");
-  });
+window.API_KEY = "apikey";
+window.INTEGRATION_URL = "urlIntegration";

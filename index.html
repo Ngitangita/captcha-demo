@@ -5,16 +5,47 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login with CAPTCHA</title>
+    <script type="text/javascript" src="https://3709a082b57f.eu-west-3.captcha-sdk.awswaf.com/3709a082b57f/jsapi.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+  
   </head>
   <body>
     <div id="app">
       <div class="login-container">
         <h1>Login with CAPTCHA</h1>
-        <button id="showCaptchaBtn">Afficher CAPTCHA</button>
-        <p id="captchaMessage"></p>
+        <button id="showCaptchaBtn" onclick="showMyCaptcha()">Afficher CAPTCHA</button>
+
+        <div id="my-captcha-container">
+      </div>
       </div>
     </div>
+    <script type="text/javascript">
+      function showMyCaptcha() {
+          var container = document.querySelector("#my-captcha-container");
+          var apiKey = window.API_KEY
+          AwsWafCaptcha.renderCaptcha(container, {
+              apiKey: apiKey,
+              onSuccess: captchaExampleSuccessFunction,
+              onError: captchaExampleErrorFunction,
+          });
+      }
+      
+      function captchaExampleSuccessFunction(wafToken) {
+         var url = window.INTEGRATION_URL;
+          AwsWafIntegration.fetch(url, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: "{ ... }"
+          });
+      }
+      
+      function captchaExampleErrorFunction(error) {
+          console.log(error);
+      }
+  </script>
+  
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
